@@ -3,8 +3,8 @@
 <suite name="Suite">
     <test name="Test">
         <classes>
-            <class name="com.racloop.qa.AppiumBaseTest"/>
             <class name="com.racloop.qa.utils.ConfigTest"/>
+            <class name="com.racloop.qa.utils.EmailUtils"/>
             <class name="com.racloop.qa.infra.EmulatorTest"/>
             <class name="com.racloop.qa.infra.AppiumServerTest"/>
         </classes>
