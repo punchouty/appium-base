@@ -28,10 +28,16 @@ public class AppiumBase {
         initProperties();
         System.out.println(System.getProperty("device"));
         if(System.getProperty("device").toUpperCase().equals(AppiumDriverType.ANDROID_EMULATOR.name())) {
-            Emulator.launch();
-            Emulator.waitForBeReady();
+            boolean startAutomaticallyEmulator = Boolean.getBoolean(System.getProperty("auto.start.emulator"));
+            if(startAutomaticallyEmulator) {
+                Emulator.launch();
+                Emulator.waitForBeReady();
+            }
         }
-        AppiumServer.launch();
+        boolean startAutomaticallyAppium = Boolean.getBoolean(System.getProperty("auto.start.appium"));
+        if(startAutomaticallyAppium) {
+            AppiumServer.launch();
+        }
         appiumFactory = new ThreadLocal<AppiumFactory>() {
             @Override
             protected AppiumFactory initialValue() {
@@ -67,9 +73,15 @@ public class AppiumBase {
     }
 
     private static void stop() {
-        AppiumServer.stop();
+        boolean startAutomaticallyAppium = Boolean.getBoolean(System.getProperty("auto.start.appium"));
+        if(startAutomaticallyAppium) {
+            AppiumServer.stop();
+        }
         if(System.getProperty("device").toUpperCase().equals(AppiumDriverType.ANDROID_EMULATOR.name())) {
-            Emulator.stop();
+            boolean startAutomaticallyEmulator = Boolean.getBoolean(System.getProperty("auto.start.emulator"));
+            if(startAutomaticallyEmulator) {
+                Emulator.stop();
+            }
         }
     }
 }
